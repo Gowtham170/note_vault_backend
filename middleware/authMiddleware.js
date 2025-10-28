@@ -1,4 +1,4 @@
-import { User } from "../model/index/js";
+import { User } from "../model/index.js";
 import { compareToken } from "../util/util.js";
 import dotenv from 'dotenv';
 

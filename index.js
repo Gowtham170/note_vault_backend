@@ -5,12 +5,23 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import routes from "./routes/index.js";
+import config from "./config.json" with { type: "json" };
+import mongoose from "mongoose";
 
 const app = express();
 const port = process.env.SERVER_PORT || 4000;
 const host = process.env.SERVER_HOST;
 
 dotenv.config();
+
+
+//db connection
+mongoose.connect(config.connectionString)
+.then(() => {
+    console.log("Database connected successfully"); 
+}).catch((err) => {
+    console.error("Database connection error: ", err);
+});
 
 //middleware
 app.use(helmet());
@@ -21,7 +32,6 @@ app.use(morgan('tiny'));
 
 //route
 app.use(routes);
-
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
